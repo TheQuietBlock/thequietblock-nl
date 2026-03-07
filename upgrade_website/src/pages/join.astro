@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+---
+
+<BaseLayout title="TheQuietBlock — Join" description="Apply for whitelist access to TheQuietBlock Minecraft server." currentPage="join">
+  <Hero slot="hero" eyebrow="Whitelist Access" title="Request to Join" subtitle="Submit your Minecraft Java username and tell us why you want to join TheQuietBlock." />
+
+  <div class="crt">
+    <div class="crt-bezel">
+      <div class="crt-screen crt-screen--red" id="crt-screen">
+
+        <div id="crt-boot" class="crt-output" aria-live="polite"></div>
+
+        <div id="crt-error" class="crt-error-block" hidden>
+          <div class="crt-hr" aria-hidden="true">════════════════════════════════════════════</div>
+          <p class="crt-error-big">ERROR</p>
+          <p class="crt-error-sub">work in progress</p>
+          <div class="crt-hr" aria-hidden="true">════════════════════════════════════════════</div>
+          <p class="crt-coming-soon">Coming soon</p>
+        </div>
+
+        <div id="crt-prompt" class="crt-prompt-line" hidden>
+          <span>guest@tqb:~$ </span><span class="crt-cursor"></span>
+        </div>
+
+      </div>
+    </div>
+    <div class="crt-stand">
+      <div class="crt-led crt-led--red" id="crt-led"></div>
+    </div>
+  </div>
+
+  <script>
+    import { initCrtBoot } from '../scripts/crt-boot';
+
+    document.addEventListener('astro:page-load', () => {
+      initCrtBoot();
+    });
+  </script>
+</BaseLayout>
