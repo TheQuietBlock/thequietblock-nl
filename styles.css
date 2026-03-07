@@ -994,6 +994,474 @@ details[open] > summary::before {
   100% { background-position: 220% 50%; }
 }
 
+/* ===== SHARED FORM UTILITIES ===== */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.apply-feedback {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.84rem;
+  min-height: 1.4rem;
+}
+
+.apply-feedback::before {
+  content: "> ";
+  color: var(--accent);
+}
+
+.apply-feedback:empty::before {
+  content: none;
+}
+
+.apply-feedback.is-success {
+  color: var(--accent);
+  text-shadow: 0 0 6px var(--glow-green);
+}
+
+.apply-feedback.is-error {
+  color: var(--danger);
+  text-shadow: 0 0 6px var(--glow-red);
+}
+
+.whitelist-link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 150ms ease;
+}
+
+.whitelist-link:hover {
+  color: var(--accent-2);
+}
+
+/* ===== CRT MONITOR ===== */
+.crt {
+  max-width: 54rem;
+  margin: 0 auto;
+}
+
+.crt-bezel {
+  background: #1c1c1c;
+  border-radius: 1.4rem;
+  padding: 1.6rem 1.8rem;
+  border: 2px solid #2e2e2e;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.7),
+    inset 0 1px 3px rgba(255, 255, 255, 0.04),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.crt-bezel::before {
+  content: "TQB-TERM";
+  position: absolute;
+  top: 0.45rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.25em;
+  color: #444;
+  text-transform: uppercase;
+}
+
+.crt-screen {
+  background: #020802;
+  border-radius: 0.5rem;
+  padding: 2rem 2.2rem;
+  position: relative;
+  overflow: hidden;
+  color: #33ff33;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.86rem;
+  line-height: 1.7;
+  min-height: 28rem;
+  box-shadow:
+    inset 0 0 100px rgba(51, 255, 51, 0.03),
+    inset 0 0 30px rgba(0, 0, 0, 0.8);
+  animation: crt-flicker 5s infinite;
+}
+
+/* CRT scanlines — thicker & more visible than the site-wide ones */
+.crt-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.3) 2px,
+    rgba(0, 0, 0, 0.3) 4px
+  );
+  pointer-events: none;
+  z-index: 10;
+  border-radius: 0.5rem;
+}
+
+/* Screen curvature vignette */
+.crt-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    transparent 55%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  pointer-events: none;
+  z-index: 11;
+  border-radius: 0.5rem;
+}
+
+@keyframes crt-flicker {
+  0%    { opacity: 1; }
+  2%    { opacity: 0.97; }
+  4%    { opacity: 1; }
+  5.5%  { opacity: 0.94; }
+  7%    { opacity: 1; }
+  100%  { opacity: 1; }
+}
+
+/* Monitor stand */
+.crt-stand {
+  width: 36%;
+  margin: 0 auto;
+  height: 1rem;
+  background: linear-gradient(180deg, #1c1c1c, #111);
+  border-radius: 0 0 0.5rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #2e2e2e;
+  border-top: none;
+}
+
+.crt-led {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #33ff33;
+  box-shadow: 0 0 6px rgba(51, 255, 51, 0.8);
+  animation: crt-led-blink 2.5s ease-in-out infinite;
+}
+
+@keyframes crt-led-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
+
+/* Red LED variant */
+.crt-led--red {
+  background: #ff3333;
+  box-shadow: 0 0 6px rgba(255, 51, 51, 0.8);
+}
+
+/* ===== RED CRT VARIANT ===== */
+.crt-screen--red {
+  box-shadow:
+    inset 0 0 100px rgba(255, 51, 51, 0.04),
+    inset 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+.crt-screen--red::before {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(255, 20, 20, 0.06) 2px,
+    rgba(0, 0, 0, 0.3) 4px
+  );
+}
+
+.crt-screen--red::after {
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(255, 40, 40, 0.02) 30%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+.crt-screen--red,
+.crt-screen--red span,
+.crt-screen--red p {
+  color: #ff3333;
+  text-shadow: 0 0 6px rgba(255, 51, 51, 0.4);
+}
+
+.crt-screen--red .crt-hr {
+  color: #ff3333;
+  opacity: 0.25;
+}
+
+.crt-screen--red .crt-cursor::after {
+  color: #ff3333;
+}
+
+/* Error block */
+.crt-error-block {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.crt-error-big {
+  font-family: "Oxanium", "Share Tech Mono", monospace;
+  font-size: clamp(2.6rem, 8vw, 5rem);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0.8rem 0 0.2rem;
+  color: #ff3333;
+  text-shadow:
+    0 0 20px rgba(255, 51, 51, 0.7),
+    0 0 60px rgba(255, 51, 51, 0.3),
+    0 0 120px rgba(255, 51, 51, 0.1);
+  animation: error-pulse 2s ease-in-out infinite;
+}
+
+.crt-error-sub {
+  font-family: "Share Tech Mono", monospace;
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0;
+  color: #ff3333;
+  opacity: 0.7;
+}
+
+.crt-coming-soon {
+  font-family: "Share Tech Mono", monospace;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin: 1.5rem 0 0;
+  color: #ff3333;
+  opacity: 0.45;
+}
+
+.crt-coming-soon::before {
+  content: ">> ";
+}
+
+@keyframes error-pulse {
+  0%, 100% {
+    opacity: 1;
+    text-shadow:
+      0 0 20px rgba(255, 51, 51, 0.7),
+      0 0 60px rgba(255, 51, 51, 0.3),
+      0 0 120px rgba(255, 51, 51, 0.1);
+  }
+  50% {
+    opacity: 0.85;
+    text-shadow:
+      0 0 10px rgba(255, 51, 51, 0.5),
+      0 0 40px rgba(255, 51, 51, 0.15);
+  }
+}
+
+/* ===== CRT CONTENT ===== */
+
+/* All text inside CRT is phosphor green */
+.crt-screen,
+.crt-screen h2,
+.crt-screen p,
+.crt-screen label,
+.crt-screen span,
+.crt-screen a,
+.crt-screen dt,
+.crt-screen dd {
+  color: #33ff33;
+  text-shadow: 0 0 6px rgba(51, 255, 51, 0.35);
+}
+
+.crt-heading {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0.4rem 0;
+}
+
+.crt-text {
+  margin: 0.4rem 0 0.6rem;
+  font-size: 0.82rem;
+  opacity: 0.7;
+}
+
+.crt-hr {
+  opacity: 0.3;
+  font-size: 0.72rem;
+  margin: 0.4rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* Boot output */
+.crt-output {
+  white-space: pre-wrap;
+}
+
+.crt-line {
+  display: block;
+}
+
+/* Bottom prompt */
+.crt-prompt-line {
+  margin-top: 1.2rem;
+}
+
+.crt-cursor::after {
+  content: "█";
+  animation: blink-block 0.85s step-end infinite;
+}
+
+/* ===== CRT FORM ===== */
+.crt-form {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+  position: relative;
+}
+
+.crt-field {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.crt-label {
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+
+.crt-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(51, 255, 51, 0.25);
+  color: #33ff33;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.88rem;
+  padding: 0.4rem 0;
+  outline: none;
+  text-shadow: 0 0 6px rgba(51, 255, 51, 0.35);
+  caret-color: #33ff33;
+  resize: vertical;
+}
+
+.crt-input:focus {
+  border-bottom-color: #33ff33;
+  box-shadow: 0 1px 0 0 rgba(51, 255, 51, 0.3);
+}
+
+.crt-input::placeholder {
+  color: rgba(51, 255, 51, 0.2);
+}
+
+.crt-hint {
+  font-size: 0.68rem;
+  opacity: 0.4;
+}
+
+.crt-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.crt-checkbox-label input[type="checkbox"] {
+  accent-color: #33ff33;
+  margin-top: 0.18rem;
+  flex-shrink: 0;
+}
+
+.crt-button {
+  background: transparent;
+  border: 1px solid #33ff33;
+  color: #33ff33;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.84rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  text-shadow: 0 0 6px rgba(51, 255, 51, 0.35);
+  letter-spacing: 0.06em;
+  transition: background 150ms ease, box-shadow 150ms ease;
+  justify-self: start;
+}
+
+.crt-button:hover {
+  background: rgba(51, 255, 51, 0.08);
+  box-shadow: 0 0 18px rgba(51, 255, 51, 0.25);
+}
+
+.crt-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Feedback overrides inside CRT */
+.crt-screen .apply-feedback::before {
+  color: #33ff33;
+}
+
+.crt-screen .apply-feedback.is-success {
+  color: #33ff33;
+  text-shadow: 0 0 8px rgba(51, 255, 51, 0.6);
+}
+
+.crt-screen .apply-feedback.is-error {
+  color: #ff4444;
+  text-shadow: 0 0 8px rgba(255, 68, 68, 0.5);
+}
+
+.crt-link {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.crt-link:hover {
+  color: #66ff66 !important;
+}
+
+/* ===== CRT PRIVACY ===== */
+.crt-privacy-list {
+  margin: 0.5rem 0 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.crt-privacy-list dt {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.crt-privacy-list dt::before {
+  content: "> ";
+  opacity: 1;
+}
+
+.crt-privacy-list dd {
+  margin: 0.1rem 0 0;
+  padding-left: 1.2rem;
+  border-left: 1px solid rgba(51, 255, 51, 0.15);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.76rem;
+  font-weight: 400;
+  opacity: 0.65;
+}
+
 /* ===== FOCUS ===== */
 a:focus-visible,
 button:focus-visible,

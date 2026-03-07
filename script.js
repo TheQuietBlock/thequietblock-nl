@@ -255,26 +255,220 @@
   }
 
   /* ============================================================
-     RULES TERMINAL — reveal lines sequentially
+     RULES TERMINAL — type out line by line, char by char
   ============================================================ */
   function initRulesTerminal() {
-    const rules   = document.querySelectorAll(".term-rule");
-    const closing = document.querySelector(".term-closing");
+    const cmdSpan  = document.querySelector(".term-cmd-text");
+    const rules    = document.querySelectorAll(".term-rule");
+    const closing  = document.querySelector(".term-closing");
+    const lastLine = document.querySelector(".term-last");
     if (!rules.length) return;
 
-    const STAGGER = 160; /* ms between each rule block */
-    const START   = 300; /* initial delay */
+    if (lastLine) lastLine.style.visibility = "hidden";
 
-    rules.forEach((rule, i) => {
-      setTimeout(() => rule.classList.add("is-visible"), START + i * STAGGER);
+    const cmdText = cmdSpan ? cmdSpan.textContent : "";
+    if (cmdSpan) {
+      cmdSpan.textContent = "";
+      cmdSpan.classList.add("has-cursor");
+    }
+
+    const ruleData = Array.from(rules).map(rule => {
+      const titleEl = rule.querySelector(".term-rule-title");
+      const descEl  = rule.querySelector(".term-rule-desc");
+      const title = titleEl ? titleEl.textContent : "";
+      const desc  = descEl  ? descEl.textContent  : "";
+      if (titleEl) titleEl.textContent = "";
+      if (descEl)  { descEl.textContent = ""; descEl.style.visibility = "hidden"; }
+      return { el: rule, titleEl, descEl, title, desc };
     });
 
-    if (closing) {
-      setTimeout(
-        () => closing.classList.add("is-visible"),
-        START + rules.length * STAGGER + 200
-      );
+    function typeText(el, text, speed) {
+      return new Promise(resolve => {
+        let i = 0;
+        (function next() {
+          if (i < text.length) {
+            el.textContent = text.slice(0, ++i);
+            setTimeout(next, speed + Math.random() * speed * 0.4);
+          } else resolve();
+        })();
+      });
     }
+
+    function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    async function run() {
+      if (cmdSpan) {
+        await typeText(cmdSpan, cmdText, 40);
+        cmdSpan.classList.remove("has-cursor");
+      }
+
+      await wait(500);
+
+      for (const d of ruleData) {
+        d.el.classList.add("is-visible");
+
+        if (d.titleEl) {
+          d.titleEl.classList.add("has-cursor");
+          await typeText(d.titleEl, d.title, 22);
+          d.titleEl.classList.remove("has-cursor");
+        }
+        if (d.descEl) {
+          d.descEl.style.visibility = "visible";
+          await typeText(d.descEl, d.desc, 6);
+        }
+
+        await wait(280);
+      }
+
+      if (closing) {
+        await wait(200);
+        closing.classList.add("is-visible");
+      }
+
+      if (lastLine) {
+        await wait(300);
+        lastLine.style.visibility = "visible";
+      }
+    }
+
+    setTimeout(run, 600);
+  }
+
+  /* ============================================================
+     CRT BOOT SEQUENCE (join page)
+  ============================================================ */
+  function initCrtBoot() {
+    const bootEl   = document.getElementById("crt-boot");
+    const errorEl  = document.getElementById("crt-error");
+    const promptEl = document.getElementById("crt-prompt");
+    if (!bootEl) return;
+
+    const BOOT_LINES = [
+      "TQB-TERM v2.1 — TheQuietBlock Terminal",
+      "(C) 2024-2026 TheQuietBlock Community",
+      "",
+      "> Initializing session...",
+      "> Loading whitelist-apply.sh ...",
+      "> ERROR: module not compiled",
+      "> ABORT: system halted",
+    ];
+
+    function typeLine(text, speed) {
+      return new Promise(resolve => {
+        const span = document.createElement("span");
+        span.className = "crt-line";
+        bootEl.appendChild(span);
+
+        if (!text) { span.textContent = "\u00A0"; resolve(); return; }
+
+        let i = 0;
+        (function next() {
+          if (i < text.length) {
+            span.textContent = text.slice(0, ++i);
+            setTimeout(next, speed + Math.random() * speed * 0.5);
+          } else resolve();
+        })();
+      });
+    }
+
+    function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    async function run() {
+      for (const line of BOOT_LINES) {
+        await typeLine(line, 20);
+        await wait(line.startsWith("> ERROR") ? 600 : line.startsWith(">") ? 350 : 120);
+      }
+
+      await wait(700);
+
+      if (errorEl)  errorEl.hidden  = false;
+      if (promptEl) promptEl.hidden = false;
+    }
+
+    setTimeout(run, 400);
+  }
+
+  /* ============================================================
+     WHITELIST APPLICATION FORM
+  ============================================================ */
+  function initApplyForm() {
+    const form     = document.getElementById("apply-form");
+    const feedback = document.getElementById("apply-feedback");
+    const submit   = document.getElementById("apply-submit");
+    if (!form || !feedback || !submit) return;
+
+    const API_ENDPOINT = "/api/apply.php";
+    const SUBMIT_COOLDOWN_MS = 10000;
+    let lastSubmitAt = 0;
+
+    function showFeedback(message, type) {
+      feedback.textContent = message;
+      feedback.className = "apply-feedback " + (type === "success" ? "is-success" : "is-error");
+    }
+
+    function clearFeedback() {
+      feedback.textContent = "";
+      feedback.className = "apply-feedback";
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearFeedback();
+
+      const now = Date.now();
+      if (now - lastSubmitAt < SUBMIT_COOLDOWN_MS) {
+        showFeedback("Please wait before submitting again.", "error");
+        return;
+      }
+
+      const username   = form.elements["username"].value.trim();
+      const motivation = form.elements["motivation"].value.trim();
+      const honeypot   = form.elements["website"].value;
+      const consent    = form.elements["consent"].checked;
+
+      if (honeypot) return;
+
+      if (!consent) {
+        showFeedback("You must agree to the privacy notice before submitting.", "error");
+        return;
+      }
+
+      if (!/^[a-zA-Z0-9_]{3,16}$/.test(username)) {
+        showFeedback("Invalid username. Use 3\u201316 characters: letters, numbers, underscores.", "error");
+        return;
+      }
+
+      if (motivation.length < 10 || motivation.length > 500) {
+        showFeedback("Motivation must be between 10 and 500 characters.", "error");
+        return;
+      }
+
+      submit.disabled = true;
+      submit.textContent = "[ Submitting... ]";
+      lastSubmitAt = now;
+
+      try {
+        const response = await fetch(API_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({ username, motivation })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          showFeedback("Application submitted. You will be contacted within 24 hours.", "success");
+          form.reset();
+        } else {
+          showFeedback(data.message || "Something went wrong. Try again later.", "error");
+        }
+      } catch {
+        showFeedback("Network error. Please check your connection and try again.", "error");
+      } finally {
+        submit.disabled = false;
+        submit.textContent = "[ Submit Application ]";
+      }
+    });
   }
 
   /* ============================================================
@@ -285,4 +479,6 @@
   initTypingEffect();
   initBootSequence();
   initRulesTerminal();
+  initCrtBoot();
+  initApplyForm();
 })();
