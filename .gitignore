@@ -1,3 +1,7 @@
 #Raw Templates
 /project_code/
 *.Zone.Identifier
+
+# API secrets and dependencies
+api/.env
+api/vendor/
