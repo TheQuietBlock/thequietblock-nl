@@ -1,0 +1,19 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+}
+
+const { eyebrow, title, subtitle } = Astro.props;
+---
+
+<div class="container hero">
+  <p class="eyebrow">{eyebrow}</p>
+  <h1>{title}</h1>
+  <p class="subtitle">{subtitle}</p>
+  <div class="hero-actions">
+    <slot />
+    <p class="server-inline">Server: <code>mc.thequietblock.nl</code></p>
+  </div>
+</div>

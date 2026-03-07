@@ -1,0 +1,16 @@
+---
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div class="panel-chrome" aria-hidden="true">
+  <div class="chrome-dots">
+    <span class="chrome-dot"></span>
+    <span class="chrome-dot"></span>
+    <span class="chrome-dot"></span>
+  </div>
+  <span class="chrome-label">{label}</span>
+</div>

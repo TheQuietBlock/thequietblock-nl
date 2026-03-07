@@ -1,0 +1,56 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  currentPage: string;
+}
+
+const { title, description, currentPage } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{title}</title>
+    <meta name="description" content={description}>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <ViewTransitions />
+  </head>
+  <body data-theme="dark">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+      <canvas id="matrix-canvas" aria-hidden="true"></canvas>
+      <div class="grid-overlay" aria-hidden="true"></div>
+      <Nav currentPage={currentPage} />
+      <slot name="hero" />
+    </header>
+
+    <main id="main-content" class="container main-content">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <script>
+      import { initMatrixRain } from '../scripts/matrix-rain';
+      import { initGlitch, initTypingEffect } from '../scripts/effects';
+
+      document.addEventListener('astro:page-load', () => {
+        initMatrixRain();
+        initGlitch();
+        initTypingEffect();
+      });
+    </script>
+  </body>
+</html>
