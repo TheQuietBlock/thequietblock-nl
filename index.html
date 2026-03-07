@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TheQuietBlock</title>
+    <meta name="description" content="TheQuietBlock Minecraft community server.">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <!--
+    Recommended static host headers:
+    Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+    Referrer-Policy: strict-origin-when-cross-origin
+    X-Content-Type-Options: nosniff
+    Permissions-Policy: geolocation=(), microphone=(), camera=()
+    X-Frame-Options: DENY
+    Cross-Origin-Opener-Policy: same-origin
+    Cross-Origin-Resource-Policy: same-origin
+    -->
+  </head>
+  <body data-theme="dark">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header id="top" class="site-header">
+      <div class="grid-overlay" aria-hidden="true"></div>
+      <nav class="top-nav" aria-label="Primary">
+        <div class="container top-nav-inner">
+          <a href="index.html" aria-current="page">Home</a>
+          <a href="rules.html">Rules</a>
+          <a href="faq.html">FAQ</a>
+          <a href="community.html">Community</a>
+        </div>
+      </nav>
+      <div class="container hero">
+        <p class="eyebrow">Secure Community Node</p>
+        <h1>Welcome to TheQuietBlock</h1>
+        <p class="subtitle">A polished Minecraft community focused on smooth gameplay, fair moderation, and a relaxed social vibe.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#status" aria-label="Join Server and view connection details">Join Server</a>
+          <button id="theme-toggle" class="btn-secondary" type="button" aria-label="Toggle between dark mode and RGB mode">RGB Mode</button>
+          <a class="btn-secondary" href="rules.html" aria-label="Read server rules">Rules</a>
+          <a class="btn-secondary" href="faq.html" aria-label="Read frequently asked questions">FAQ</a>
+          <p class="server-inline">Server: <code>mc.thequietblock.nl</code></p>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" class="container main-content">
+      <section id="status" class="status-panel" aria-labelledby="status-title">
+        <h2 id="status-title">Server Status</h2>
+        <p id="status-message">Live server status will be shown here soon, including online/offline state and current player count.</p>
+        <dl class="status-grid" aria-live="polite">
+          <div>
+            <dt>State</dt>
+            <dd id="server-state">Unknown</dd>
+          </div>
+          <div>
+            <dt>Players</dt>
+            <dd id="player-count">-/-</dd>
+          </div>
+          <div>
+            <dt>Version</dt>
+            <dd id="server-version">Not available</dd>
+          </div>
+          <div>
+            <dt>MOTD</dt>
+            <dd id="server-motd">Not available</dd>
+          </div>
+        </dl>
+        <button id="refresh-status" class="btn-secondary" type="button" aria-label="Refresh server status">Refresh Status</button>
+        <p class="whitelist-note">At the moment it’s a whitelist server.</p>
+        <p class="whitelist-note">Considering adding a signup page for whitelist access soon.</p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>The Quiet Block is an independent community and is not affiliated with, endorsed by, sponsored by, or associated with Mojang Studios or Microsoft.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
