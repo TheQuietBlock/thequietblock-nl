@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TheQuietBlock FAQ</title>
-    <meta name="description" content="Frequently asked questions for TheQuietBlock.">
+    <title>TheQuietBlock — Join</title>
+    <meta name="description" content="Apply for whitelist access to TheQuietBlock Minecraft server.">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,15 +21,15 @@
         <div class="container top-nav-inner">
           <a href="index.html">Home</a>
           <a href="rules.html">Rules</a>
-          <a href="faq.html" aria-current="page">FAQ</a>
+          <a href="faq.html">FAQ</a>
           <a href="community.html">Community</a>
-          <a href="join.html">Join</a>
+          <a href="join.html" aria-current="page">Join</a>
         </div>
       </nav>
       <div class="container hero">
-        <p class="eyebrow">Support Console</p>
-        <h1>Frequently Asked Questions</h1>
-        <p class="subtitle">Quick answers for joining, rules, and support.</p>
+        <p class="eyebrow">Whitelist Access</p>
+        <h1>Request to Join</h1>
+        <p class="subtitle">Submit your Minecraft Java username and tell us why you want to join TheQuietBlock.</p>
         <div class="hero-actions">
           <p class="server-inline">Server: <code>mc.thequietblock.nl</code></p>
         </div>
@@ -37,29 +37,30 @@
     </header>
 
     <main id="main-content" class="container main-content">
-      <section class="faq" aria-labelledby="faq-title">
-        <h2 id="faq-title">FAQ</h2>
+      <div class="crt">
+        <div class="crt-bezel">
+          <div class="crt-screen crt-screen--red" id="crt-screen">
 
-        <details>
-          <summary>How do I join the server?</summary>
-          <p>Launch Minecraft Java Edition, add <code>mc.thequietblock.nl</code> to your server list, and connect.</p>
-        </details>
+            <div id="crt-boot" class="crt-output" aria-live="polite"></div>
 
-        <details>
-          <summary>Is the server beginner-friendly?</summary>
-          <p>Yes. New players are welcome, and the community is encouraged to be helpful and respectful.</p>
-        </details>
+            <div id="crt-error" class="crt-error-block" hidden>
+              <div class="crt-hr" aria-hidden="true">════════════════════════════════════════════</div>
+              <p class="crt-error-big">ERROR</p>
+              <p class="crt-error-sub">work in progress</p>
+              <div class="crt-hr" aria-hidden="true">════════════════════════════════════════════</div>
+              <p class="crt-coming-soon">Coming soon</p>
+            </div>
 
-        <details>
-          <summary>Where can I read all rules?</summary>
-          <p>Read the full rule set on the dedicated <a href="rules.html">Rules page</a>.</p>
-        </details>
+            <div id="crt-prompt" class="crt-prompt-line" hidden>
+              <span>guest@tqb:~$ </span><span class="crt-cursor"></span>
+            </div>
 
-        <details>
-          <summary>Who do I contact for support?</summary>
-          <p>Support contact options will be published soon on the website.</p>
-        </details>
-      </section>
+          </div>
+        </div>
+        <div class="crt-stand">
+          <div class="crt-led crt-led--red" id="crt-led"></div>
+        </div>
+      </div>
     </main>
 
     <footer class="site-footer">

@@ -6,22 +6,26 @@
     <title>TheQuietBlock</title>
     <meta name="description" content="TheQuietBlock Minecraft community server.">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <!--
-    Recommended static host headers:
-    Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
-    Referrer-Policy: strict-origin-when-cross-origin
-    X-Content-Type-Options: nosniff
-    Permissions-Policy: geolocation=(), microphone=(), camera=()
-    X-Frame-Options: DENY
-    Cross-Origin-Opener-Policy: same-origin
-    Cross-Origin-Resource-Policy: same-origin
+    Recommended nginx headers (add to server block or location):
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.mcsrvstat.us; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header Cross-Origin-Opener-Policy "same-origin" always;
+    add_header Cross-Origin-Resource-Policy "same-origin" always;
     -->
   </head>
   <body data-theme="dark">
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <header id="top" class="site-header">
+      <canvas id="matrix-canvas" aria-hidden="true"></canvas>
       <div class="grid-overlay" aria-hidden="true"></div>
       <nav class="top-nav" aria-label="Primary">
         <div class="container top-nav-inner">
@@ -29,6 +33,7 @@
           <a href="rules.html">Rules</a>
           <a href="faq.html">FAQ</a>
           <a href="community.html">Community</a>
+          <a href="join.html">Join</a>
         </div>
       </nav>
       <div class="container hero">
@@ -36,8 +41,7 @@
         <h1>Welcome to TheQuietBlock</h1>
         <p class="subtitle">A polished Minecraft community focused on smooth gameplay, fair moderation, and a relaxed social vibe.</p>
         <div class="hero-actions">
-          <a class="btn-primary" href="#status" aria-label="Join Server and view connection details">Join Server</a>
-          <button id="theme-toggle" class="btn-secondary" type="button" aria-label="Toggle between dark mode and RGB mode">RGB Mode</button>
+          <a class="btn-primary" href="join.html" aria-label="Apply for whitelist access">Join Server</a>
           <a class="btn-secondary" href="rules.html" aria-label="Read server rules">Rules</a>
           <a class="btn-secondary" href="faq.html" aria-label="Read frequently asked questions">FAQ</a>
           <p class="server-inline">Server: <code>mc.thequietblock.nl</code></p>
@@ -47,11 +51,19 @@
 
     <main id="main-content" class="container main-content">
       <section id="status" class="status-panel" aria-labelledby="status-title">
+        <div class="panel-chrome" aria-hidden="true">
+          <div class="chrome-dots">
+            <span class="chrome-dot"></span>
+            <span class="chrome-dot"></span>
+            <span class="chrome-dot"></span>
+          </div>
+          <span class="chrome-label">server-status.sh</span>
+        </div>
         <h2 id="status-title">Server Status</h2>
         <p id="status-message">Live server status will be shown here soon, including online/offline state and current player count.</p>
         <dl class="status-grid" aria-live="polite">
           <div>
-            <dt>State</dt>
+            <dt><span class="status-dot" id="status-dot"></span> State</dt>
             <dd id="server-state">Unknown</dd>
           </div>
           <div>
@@ -68,8 +80,7 @@
           </div>
         </dl>
         <button id="refresh-status" class="btn-secondary" type="button" aria-label="Refresh server status">Refresh Status</button>
-        <p class="whitelist-note">At the moment it’s a whitelist server.</p>
-        <p class="whitelist-note">Considering adding a signup page for whitelist access soon.</p>
+        <p class="whitelist-note">This is a whitelist server. <a href="join.html" class="whitelist-link">Apply here</a> to get access.</p>
       </section>
     </main>
 
