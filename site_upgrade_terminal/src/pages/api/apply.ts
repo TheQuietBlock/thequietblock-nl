@@ -29,11 +29,21 @@ async function parseBody(request: Request) {
   return Object.fromEntries(form.entries());
 }
 
+const ALLOWED_ORIGINS = new Set([
+  "https://thequietblock.nl",
+  "https://www.thequietblock.nl"
+]);
+
 export const POST: APIRoute = async ({ request, clientAddress }) => {
+  const origin = request.headers.get("origin") ?? "";
+  if (!ALLOWED_ORIGINS.has(origin)) {
+    return json("Forbidden.", false, 403);
+  }
+
   const now = Date.now();
   cleanupCooldowns(now);
 
-  const key = clientAddress || request.headers.get("x-forwarded-for") || "unknown";
+  const key = clientAddress || "unknown";
   const lastSeen = ipCooldown.get(key);
   if (lastSeen && lastSeen > now) {
     return json("Please wait before submitting again.", false, 429);
@@ -67,7 +77,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   const replyTo = import.meta.env.APPLY_REPLY_TO || from;
 
   if (!host || !user || !pass || !to || !from) {
-    return json("Application delivery is not configured yet for this environment.", false, 503);
+    return json("Service temporarily unavailable.", false, 503);
   }
 
   try {

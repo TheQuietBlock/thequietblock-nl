@@ -5,3 +5,8 @@
 # API secrets and dependencies
 api/.env
 api/vendor/
+
+# Build output and caches
+node_modules/
+dist/
+.astro/

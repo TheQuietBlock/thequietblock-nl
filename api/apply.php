@@ -4,6 +4,16 @@ declare(strict_types=1);
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 
+$allowedOrigins = ['https://thequietblock.nl', 'https://www.thequietblock.nl'];
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+if (!in_array($origin, $allowedOrigins, true)) {
+    http_response_code(403);
+    echo json_encode(['success' => false, 'message' => 'Forbidden.']);
+    exit;
+}
+header("Access-Control-Allow-Origin: $origin");
+header('Vary: Origin');
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Method not allowed.']);
