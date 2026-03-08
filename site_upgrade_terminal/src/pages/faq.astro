@@ -1,0 +1,64 @@
+---
+import { getCollection, render } from "astro:content";
+import Hero from "../components/chrome/Hero.astro";
+import PanelChrome from "../components/chrome/PanelChrome.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteMeta } from "../data/site";
+
+const faqEntries = (await getCollection("faq")).sort((a, b) => a.data.order - b.data.order);
+const renderedFaq = await Promise.all(
+  faqEntries.map(async (entry) => ({
+    entry,
+    render: await render(entry)
+  }))
+);
+---
+
+<BaseLayout
+  title="TheQuietBlock | FAQ"
+  description="Searchable FAQ for TheQuietBlock covering joining, versions, rules, and general server questions."
+  currentPage="faq"
+>
+  <Hero
+    slot="hero"
+    eyebrow="FAQ"
+    title="Common questions"
+    subtitle="Short answers for joining, versions, rules, and what to expect from a whitelist server."
+    command="search faq"
+  >
+    <a class="btn-primary" href="/join">Join</a>
+    <a class="btn-secondary" href="/rules">Rules</a>
+    <p class="server-inline">Server: <code>{siteMeta.host}</code></p>
+  </Hero>
+
+  <section class="system-panel faq-shell">
+    <PanelChrome label="faq.txt" />
+    <div class="section-heading">
+      <div>
+        <p class="section-kicker">Quick Answers</p>
+        <h2>Server FAQ</h2>
+      </div>
+    </div>
+    <label class="search-shell">
+      <span class="label-prompt">&gt;</span>
+      <input id="faq-search" type="search" placeholder="Search whitelist, versions, mods..." />
+    </label>
+    <div class="stack-list">
+      {renderedFaq.map(({ entry, render }) => {
+        const { Content } = render;
+        const faqText = `${entry.data.question} ${entry.data.short}`.toLowerCase();
+        return (
+          <details class="faq-item" data-faq-item data-faq-text={faqText}>
+            <summary>
+              <span>{entry.data.question}</span>
+              <span class="card-meta">{entry.data.short}</span>
+            </summary>
+            <div class="faq-body">
+              <Content />
+            </div>
+          </details>
+        );
+      })}
+    </div>
+  </section>
+</BaseLayout>

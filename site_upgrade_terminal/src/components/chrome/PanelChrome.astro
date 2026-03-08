@@ -1,0 +1,13 @@
+---
+interface Props {
+  label: string;
+  state?: string;
+}
+
+const { label, state = "read-only" } = Astro.props;
+---
+
+<div class="panel-chrome" aria-hidden="true">
+  <span class="chrome-label">{label}</span>
+  <span class="chrome-state">{state}</span>
+</div>

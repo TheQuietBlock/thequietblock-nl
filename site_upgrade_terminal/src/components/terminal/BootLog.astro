@@ -1,0 +1,21 @@
+---
+interface Props {
+  label: string;
+  lines: string[];
+  variant?: "default" | "warning";
+}
+
+const { label, lines, variant = "default" } = Astro.props;
+---
+
+<section class={`terminal-panel terminal-panel--${variant}`}>
+  <div class="terminal-head">
+    <span>{label}</span>
+    <span>read-only</span>
+  </div>
+  <div class="boot-log" data-boot-sequence data-boot-delay="120">
+    {lines.map((line) => (
+      <p data-boot-line>{line}</p>
+    ))}
+  </div>
+</section>

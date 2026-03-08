@@ -1,0 +1,36 @@
+---
+import { siteMeta } from "../../data/site";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  command?: string;
+}
+
+const { eyebrow, title, subtitle, command } = Astro.props;
+---
+
+<div class="container hero">
+  <div class="hero-copy">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1 data-glitch>{title}</h1>
+    <p class="subtitle" data-type>{subtitle}</p>
+    <div class="hero-actions">
+      <slot />
+    </div>
+  </div>
+
+  <aside class="hero-console">
+    <div class="hero-console-header">
+      <span>site-notes.txt</span>
+      <span>read-only</span>
+    </div>
+    <div class="hero-console-body">
+      <p><span class="console-key">site</span> {siteMeta.name}</p>
+      <p><span class="console-key">server</span> {siteMeta.host}</p>
+      {command && <p><span class="console-key">command</span> {command}</p>}
+      <slot name="console" />
+    </div>
+  </aside>
+</div>

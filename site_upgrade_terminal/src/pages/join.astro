@@ -1,0 +1,83 @@
+---
+import ApplyForm from "../components/forms/ApplyForm.astro";
+import Hero from "../components/chrome/Hero.astro";
+import PanelChrome from "../components/chrome/PanelChrome.astro";
+import BootLog from "../components/terminal/BootLog.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteMeta } from "../data/site";
+---
+
+<BaseLayout
+  title="TheQuietBlock | Join"
+  description="Whitelist application flow for TheQuietBlock with clear review expectations and explicit error handling."
+  currentPage="join"
+>
+  <Hero
+    slot="hero"
+    eyebrow="Join"
+    title="Request whitelist access"
+    subtitle="Send your Minecraft Java username and a short introduction so staff can review your application."
+    command="open join form"
+  >
+    <a class="btn-primary" href="#apply-form">Open Application</a>
+    <a class="btn-secondary" href="/rules">Read Rules</a>
+    <p class="server-inline">Server: <code>{siteMeta.host}</code></p>
+
+    <Fragment slot="console">
+      <p><span class="console-key">host</span> {siteMeta.host}</p>
+      <p><span class="console-key">review</span> Manual staff review</p>
+      <p><span class="console-key">delivery</span> Clear success and error states</p>
+    </Fragment>
+  </Hero>
+
+  <section class="dashboard-grid">
+    <BootLog
+      label="join.log"
+      lines={[
+        "Opening whitelist application...",
+        "Preparing client-side validation...",
+        "Keeping submission errors explicit...",
+        "Join form ready."
+      ]}
+    />
+
+    <section class="system-panel">
+      <PanelChrome label="checklist.txt" />
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Before You Apply</p>
+          <h2>Eligibility checklist</h2>
+        </div>
+      </div>
+      <ul class="check-list">
+        <li>You have a valid Minecraft Java username.</li>
+        <li>You understand the server is whitelist-only.</li>
+        <li>You can explain what kind of player you are in a few clear lines.</li>
+        <li>You have read the rules and know how to contact staff if needed.</li>
+      </ul>
+    </section>
+  </section>
+
+  <section class="join-grid">
+    <ApplyForm />
+
+    <section class="system-panel">
+      <PanelChrome label="privacy.txt" />
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Privacy And Review</p>
+          <h2>What happens with your application</h2>
+        </div>
+      </div>
+      <p>
+        The form collects only what staff need to review access: username, a short motivation, and
+        optional contact details. No decorative interaction blocks submission, and reduced-motion
+        users still receive the same content.
+      </p>
+      <p>
+        If email delivery is not configured yet, the API returns a clear error instead of implying
+        that an application was sent successfully.
+      </p>
+    </section>
+  </section>
+</BaseLayout>

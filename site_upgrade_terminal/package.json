@@ -1,0 +1,23 @@
+{
+  "name": "thequietblock-terminal-upgrade",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node ./node_modules/astro/astro.js dev",
+    "build": "node ./node_modules/astro/astro.js build",
+    "preview": "node ./node_modules/astro/astro.js preview",
+    "check": "node ./node_modules/astro/astro.js check"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.1.0",
+    "astro": "^5.3.0",
+    "nodemailer": "^7.0.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.6",
+    "@types/nodemailer": "^6.4.17",
+    "typescript": "^5.8.2"
+  }
+}

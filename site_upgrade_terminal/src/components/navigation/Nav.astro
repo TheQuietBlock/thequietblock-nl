@@ -1,0 +1,26 @@
+---
+import { primaryNav } from "../../data/site";
+
+interface Props {
+  currentPage: string;
+}
+
+const { currentPage } = Astro.props;
+---
+
+<nav class="top-nav" aria-label="Primary">
+  <div class="container top-nav-inner">
+    <a class="top-nav-brand" href="/">
+      <span class="brand-mark" aria-hidden="true">[TQB]</span>
+      <span class="brand-copy">TheQuietBlock</span>
+    </a>
+
+    <div class="top-nav-links">
+      {primaryNav.map((link) => (
+        <a href={link.href} aria-current={currentPage === link.page ? "page" : undefined}>
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>

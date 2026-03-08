@@ -1,0 +1,213 @@
+.join-grid {
+  grid-template-columns: minmax(0, 1.3fr) minmax(18rem, 0.8fr);
+}
+
+.apply-intro {
+  margin-bottom: 1rem;
+  color: var(--muted);
+}
+
+.apply-mode {
+  display: grid;
+  gap: 0.45rem;
+  margin-bottom: 1.2rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(13, 19, 25, 0.78);
+}
+
+.apply-mode-command {
+  color: var(--accent);
+  letter-spacing: 0.08em;
+}
+
+.apply-mode-copy {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.apply-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.form-group {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.field-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.label-prompt {
+  color: var(--accent);
+}
+
+.input-shell {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.8rem;
+  align-items: start;
+  width: 100%;
+  padding: 0.9rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(180deg, rgba(14, 20, 26, 0.9), rgba(8, 12, 16, 0.94)),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 18px,
+      rgba(255, 255, 255, 0.015) 18px,
+      rgba(255, 255, 255, 0.015) 19px
+    );
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.input-shell:hover {
+  border-color: var(--line-strong);
+}
+
+.input-shell:focus-within {
+  border-color: var(--line-strong);
+  box-shadow: 0 0 0 1px rgb(var(--accent-rgb) / 0.12), 0 0 20px rgb(var(--accent-rgb) / 0.06);
+  transform: translateY(-1px);
+}
+
+.input-prefix {
+  min-width: 2.5rem;
+  padding-top: 0.15rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.82rem;
+}
+
+.input-shell input,
+.input-shell textarea,
+.search-shell input {
+  width: 100%;
+  border: 0;
+  padding: 0;
+  color: var(--text);
+  background: transparent;
+  outline: none;
+}
+
+.input-shell textarea {
+  resize: vertical;
+  min-height: 15rem;
+}
+
+.input-shell input::placeholder,
+.input-shell textarea::placeholder,
+.search-shell input::placeholder {
+  color: rgba(221, 232, 223, 0.46);
+}
+
+.input-shell[data-invalid="true"] {
+  border-color: rgba(255, 116, 116, 0.5);
+}
+
+.search-shell input {
+  padding: 0.15rem 0;
+}
+
+.search-shell {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.8rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.75rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(13, 19, 25, 0.78);
+}
+
+.field-hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.form-grid .field-hint {
+  min-height: 2.8rem;
+}
+
+.consent-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  color: var(--muted);
+}
+
+.consent-row input {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: 0.3rem;
+  accent-color: var(--accent);
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  align-items: center;
+}
+
+.join-form-shell .form-actions .btn-primary {
+  min-width: 15rem;
+  color: var(--accent-2);
+  border-color: rgb(var(--accent-rgb) / 0.45);
+  background: linear-gradient(180deg, rgba(22, 34, 28, 0.96), rgba(10, 16, 13, 0.98));
+  box-shadow: inset 0 0 0 1px rgb(var(--accent-rgb) / 0.08), 0 0 18px rgb(var(--accent-rgb) / 0.08);
+}
+
+.join-form-shell .form-actions .btn-primary:hover {
+  border-color: rgb(var(--accent-rgb) / 0.72);
+  box-shadow: inset 0 0 0 1px rgb(var(--accent-rgb) / 0.12), 0 0 22px rgb(var(--accent-rgb) / 0.12);
+}
+
+.apply-feedback {
+  color: var(--muted);
+}
+
+.apply-feedback.is-success {
+  color: var(--accent);
+}
+
+.apply-feedback.is-error {
+  color: var(--danger);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+@media (max-width: 980px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid .field-hint {
+    min-height: 0;
+  }
+}

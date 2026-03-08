@@ -1,0 +1,27 @@
+---
+import { siteMeta } from "../../data/site";
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="footer-title">{siteMeta.name}</p>
+      <p class="footer-copy">
+        TheQuietBlock is a whitelist Minecraft community focused on steady play, clear rules, and
+        real server information.
+      </p>
+    </div>
+    <div class="footer-links" aria-label="Secondary">
+      <a href="/">Home</a>
+      <a href="/rules">Rules</a>
+      <a href="/faq">FAQ</a>
+      <a href="/community">Community</a>
+      <a href="/join">Join</a>
+      <a href="/status">Status</a>
+    </div>
+    <div class="footer-meta">
+      <p>Server: <code>{siteMeta.host}</code></p>
+      <p>Not affiliated with Mojang Studios or Microsoft.</p>
+    </div>
+  </div>
+</footer>

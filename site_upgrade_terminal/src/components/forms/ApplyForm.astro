@@ -1,0 +1,93 @@
+---
+import PanelChrome from "../chrome/PanelChrome.astro";
+import { siteMeta } from "../../data/site";
+---
+
+<section class="system-panel join-form-shell" aria-labelledby="apply-title">
+  <PanelChrome label="join-form.txt" />
+  <div class="section-heading">
+    <div>
+      <p class="section-kicker">Whitelist Application</p>
+      <h2 id="apply-title">Request access</h2>
+    </div>
+    <p class="card-meta">Average review: {siteMeta.applyReviewTime}</p>
+  </div>
+
+  <p class="apply-intro">
+    Share your Minecraft Java username, a short note about why you want to join, and confirmation
+    that you understand the whitelist review process.
+  </p>
+
+  <div class="apply-mode" aria-hidden="true">
+    <p class="apply-mode-command">guest@thequietblock:~$ whitelist --apply</p>
+    <p class="apply-mode-copy">Keep it clear, human, and direct. The fields below are the full request.</p>
+  </div>
+
+  <form id="apply-form" class="apply-form" novalidate>
+    <div class="hp-field" aria-hidden="true">
+      <label for="website">Website</label>
+      <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <div class="form-grid">
+      <label class="form-group">
+        <span class="field-label"><span class="label-prompt">&gt;</span> Minecraft Username</span>
+        <div class="input-shell">
+          <span class="input-prefix">id</span>
+          <input
+            id="mc-username"
+            name="username"
+            type="text"
+            minlength="3"
+            maxlength="16"
+            pattern="^[a-zA-Z0-9_]{3,16}$"
+            required
+            placeholder="e.g. QuietBuilder"
+            autocomplete="off"
+            spellcheck="false"
+          />
+        </div>
+        <span class="field-hint">3-16 letters, numbers, or underscores.</span>
+      </label>
+
+      <label class="form-group">
+        <span class="field-label"><span class="label-prompt">&gt;</span> Contact (optional)</span>
+        <div class="input-shell">
+          <span class="input-prefix">ping</span>
+          <input id="contact" name="contact" type="text" maxlength="80" placeholder="Discord tag or email (optional)" />
+        </div>
+        <span class="field-hint">Optional, but useful if staff need clarification.</span>
+      </label>
+    </div>
+
+    <label class="form-group">
+      <span class="field-label"><span class="label-prompt">&gt;</span> Motivation</span>
+      <div class="input-shell">
+        <span class="input-prefix">msg</span>
+        <textarea
+          id="motivation"
+          name="motivation"
+          minlength="10"
+          maxlength="500"
+          rows="6"
+          required
+          placeholder="Tell us what kind of player you are, how you found the server, and what you hope to do once you are in."
+        ></textarea>
+      </div>
+      <span class="field-hint">10-500 characters. Clear and direct is enough.</span>
+    </label>
+
+    <label class="consent-row">
+      <input id="consent" name="consent" type="checkbox" required />
+      <span>
+        I understand this is a whitelist server and that the information above is used only for
+        access review and moderation follow-up.
+      </span>
+    </label>
+
+    <div class="form-actions">
+      <button id="apply-submit" class="btn-primary" type="submit">Submit Application</button>
+      <p id="apply-feedback" class="apply-feedback" role="status" aria-live="polite"></p>
+    </div>
+  </form>
+</section>

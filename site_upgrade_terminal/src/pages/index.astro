@@ -1,0 +1,107 @@
+---
+import Hero from "../components/chrome/Hero.astro";
+import PanelChrome from "../components/chrome/PanelChrome.astro";
+import ServerStatusPanel from "../components/status/ServerStatusPanel.astro";
+import BootLog from "../components/terminal/BootLog.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { homeConsole, siteMeta, trustSignals } from "../data/site";
+
+const routes = [
+  {
+    href: "/rules",
+    title: "Rules",
+    description: "Read the expectations that keep the world fair and the server stable."
+  },
+  {
+    href: "/faq",
+    title: "FAQ",
+    description: "Get quick answers about whitelist review, versions, and allowed mods."
+  },
+  {
+    href: "/community",
+    title: "Community",
+    description: "See what kind of pace, moderation, and shared-world culture the server aims for."
+  },
+  {
+    href: "/join",
+    title: "Join",
+    description: "Send a short whitelist application for manual review by staff."
+  }
+];
+---
+
+<BaseLayout
+  title="TheQuietBlock"
+  description="TheQuietBlock Minecraft community server with live status, clear rules, and a whitelist application flow."
+  currentPage="home"
+>
+  <Hero
+    slot="hero"
+    eyebrow="Minecraft Server"
+    title="TheQuietBlock"
+    subtitle="A whitelist Minecraft community focused on stable survival, clear rules, and a calm place to play."
+    command={`connect ${siteMeta.host}`}
+  >
+    <a class="btn-primary" href="/join">Join Server</a>
+    <a class="btn-secondary" href="/rules">Read Rules</a>
+    <a class="btn-secondary" href="/faq">Open FAQ</a>
+    <p class="server-inline">Server: <code>{siteMeta.host}</code></p>
+
+    <Fragment slot="console">
+      {homeConsole.map((item) => (
+        <p><span class="console-key">{item.label}</span> {item.value}</p>
+      ))}
+    </Fragment>
+  </Hero>
+
+  <section class="dashboard-grid">
+    <BootLog
+      label="home.log"
+      lines={[
+        "Loading homepage layout...",
+        "Checking live status endpoint...",
+        "Restoring real site routes...",
+        "TheQuietBlock homepage ready."
+      ]}
+    />
+
+    <section class="system-panel route-panel">
+      <PanelChrome label="routes.txt" />
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Site Structure</p>
+          <h2>Main Pages</h2>
+        </div>
+      </div>
+      <div class="route-grid">
+        {routes.map((route) => (
+          <a href={route.href}>
+            <strong>{route.title}</strong>
+            <span>{route.description}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  </section>
+
+  <ServerStatusPanel compact showStatusLink />
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div>
+        <p class="section-kicker">Trust Signals</p>
+        <h2>Why the site exists</h2>
+      </div>
+    </div>
+    <div class="cards-grid cards-grid--three">
+      {trustSignals.map((signal, index) => (
+        <article class="system-panel">
+          <PanelChrome label={`signal-${index + 1}.txt`} />
+          <p class="mini-label">Signal {index + 1}</p>
+          <h3>{signal.title}</h3>
+          <p>{signal.body}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,237 @@
+.system-panel,
+.terminal-panel,
+.faq-item {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, var(--surface), var(--surface-strong));
+  box-shadow: var(--shadow-lg);
+}
+
+.system-panel {
+  padding: 1.15rem;
+}
+
+.system-panel::before,
+.faq-item::before {
+  content: "";
+  position: absolute;
+  inset: 0.7rem;
+  border: 1px solid rgb(var(--accent-rgb) / 0.04);
+  border-radius: calc(var(--radius-lg) - 0.25rem);
+  pointer-events: none;
+}
+
+.panel-chrome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid rgb(var(--accent-rgb) / 0.08);
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.chrome-label,
+.chrome-state {
+  overflow-wrap: anywhere;
+}
+
+.terminal-panel {
+  overflow: hidden;
+}
+
+.terminal-panel--warning {
+  border-color: rgba(240, 187, 75, 0.45);
+}
+
+.terminal-head {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  background: rgb(var(--accent-rgb) / 0.03);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.76rem;
+}
+
+.boot-log {
+  display: grid;
+  gap: 0.55rem;
+  padding: 1rem;
+  min-height: 11.5rem;
+}
+
+.boot-log p::before {
+  content: "> ";
+  color: var(--accent);
+}
+
+.boot-log [data-boot-line] {
+  opacity: 0;
+  transform: translateY(0.3rem);
+}
+
+.boot-log [data-boot-line].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.status-message {
+  max-width: 60ch;
+  margin-bottom: 1rem;
+  color: var(--muted);
+}
+
+.status-grid,
+.status-meta-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.status-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.status-meta-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 1rem;
+}
+
+.status-grid div,
+.status-meta-grid div {
+  padding: 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgb(var(--accent-rgb) / 0.025);
+}
+
+.status-grid dt,
+.status-meta-grid dt {
+  margin-bottom: 0.35rem;
+  color: var(--muted);
+  font-size: 0.84rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.status-grid dd,
+.status-meta-grid dd {
+  margin: 0;
+  font-size: 1.02rem;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 0.72rem;
+  height: 0.72rem;
+  margin-right: 0.35rem;
+  border-radius: 999px;
+  background: rgb(var(--accent-rgb) / 0.2);
+}
+
+.status-dot.online {
+  background: var(--accent);
+  box-shadow: 0 0 12px rgb(var(--accent-rgb) / 0.45);
+}
+
+.status-dot.offline {
+  background: var(--danger);
+  box-shadow: 0 0 12px rgba(255, 116, 116, 0.45);
+}
+
+.status-transcript,
+.status-panel-footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgb(var(--accent-rgb) / 0.08);
+}
+
+.transcript-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.transcript-entry {
+  margin: 0;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgb(var(--accent-rgb) / 0.025);
+  color: var(--muted);
+}
+
+.transcript-entry[data-level="online"] {
+  color: var(--accent-2);
+}
+
+.transcript-entry[data-level="offline"],
+.transcript-entry[data-level="error"] {
+  border-color: rgba(255, 116, 116, 0.35);
+  color: #ffb0b0;
+}
+
+.transcript-entry[data-level="timeout"] {
+  border-color: rgba(240, 187, 75, 0.35);
+  color: #ffd487;
+}
+
+.protocol-card h2,
+.system-panel h3 {
+  margin-bottom: 0.55rem;
+}
+
+.faq-item {
+  overflow: clip;
+}
+
+.faq-item summary {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem 1.15rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-body {
+  padding: 0 1.15rem 1.15rem;
+  color: var(--muted);
+}
+
+.faq-body p + p {
+  margin-top: 0.9rem;
+}
+
+.faq-body ul {
+  margin-top: 0.85rem;
+  padding-left: 1.25rem;
+}
+
+.check-list {
+  display: grid;
+  gap: 0.75rem;
+  padding-left: 1.2rem;
+}
+
+.check-list li::marker {
+  color: var(--accent);
+}
+
+@media (max-width: 980px) {
+  .status-grid,
+  .status-meta-grid {
+    grid-template-columns: 1fr;
+  }
+}

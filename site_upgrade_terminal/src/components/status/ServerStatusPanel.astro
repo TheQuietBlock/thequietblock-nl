@@ -1,0 +1,79 @@
+---
+import PanelChrome from "../chrome/PanelChrome.astro";
+import { siteMeta } from "../../data/site";
+
+interface Props {
+  compact?: boolean;
+  showDetails?: boolean;
+  showStatusLink?: boolean;
+}
+
+const { compact = false, showDetails = false, showStatusLink = false } = Astro.props;
+---
+
+<section class={`system-panel status-panel ${compact ? "status-panel--compact" : ""}`} aria-labelledby="status-title">
+  <PanelChrome label="status.txt" />
+  <div class="section-heading">
+    <div>
+      <p class="section-kicker">Live Server Data</p>
+      <h2 id="status-title">Server Status</h2>
+    </div>
+    <button id="refresh-status" class="btn-secondary" type="button">Refresh</button>
+  </div>
+
+  <p id="status-message" class="status-message">
+    Checking {siteMeta.host} for current server state, player count, version, and MOTD.
+  </p>
+
+  <dl class="status-grid" aria-live="polite">
+    <div>
+      <dt><span class="status-dot" id="status-dot"></span> State</dt>
+      <dd id="server-state">Unknown</dd>
+    </div>
+    <div>
+      <dt>Players</dt>
+      <dd id="player-count">-/-</dd>
+    </div>
+    <div>
+      <dt>Version</dt>
+      <dd id="server-version">Not available</dd>
+    </div>
+    <div>
+      <dt>MOTD</dt>
+      <dd id="server-motd">Not available</dd>
+    </div>
+  </dl>
+
+  {showDetails && (
+    <>
+      <dl class="status-meta-grid" aria-live="polite">
+        <div>
+          <dt>Refresh Cooldown</dt>
+          <dd id="status-cooldown">Ready</dd>
+        </div>
+        <div>
+          <dt>Last Fetch State</dt>
+          <dd id="status-last-fetch">Idle</dd>
+        </div>
+      </dl>
+
+      <div class="status-transcript">
+        <div class="section-heading section-heading--compact">
+          <div>
+            <p class="section-kicker">Request Log</p>
+            <h3>Fetch Transcript</h3>
+          </div>
+        </div>
+        <div id="status-transcript" class="transcript-list" aria-live="polite">
+          <p class="transcript-entry" data-level="info">Waiting for the first live status request.</p>
+        </div>
+      </div>
+    </>
+  )}
+
+  {showStatusLink && (
+    <div class="status-panel-footer">
+      <a class="text-link" href="/status">Open the full status page</a>
+    </div>
+  )}
+</section>

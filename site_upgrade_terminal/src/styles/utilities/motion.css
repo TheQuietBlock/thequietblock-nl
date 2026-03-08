@@ -1,0 +1,50 @@
+h1.is-glitching {
+  animation: text-glitch 180ms linear 2;
+}
+
+[data-type].is-typed::after {
+  content: "_";
+  margin-left: 0.15rem;
+  color: var(--accent);
+  animation: blink-cursor 1s step-end infinite;
+}
+
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+@keyframes text-glitch {
+  0% {
+    transform: translateX(0);
+    text-shadow: 0 0 0 transparent;
+  }
+  30% {
+    transform: translateX(-1px);
+    text-shadow: -1px 0 rgba(125, 255, 138, 0.28), 1px 0 rgba(199, 255, 208, 0.18);
+  }
+  60% {
+    transform: translateX(1px);
+    text-shadow: 1px 0 rgba(125, 255, 138, 0.24), -1px 0 rgba(199, 255, 208, 0.14);
+  }
+  100% {
+    transform: translateX(0);
+    text-shadow: 0 0 0 transparent;
+  }
+}
+
+@keyframes blink-cursor {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

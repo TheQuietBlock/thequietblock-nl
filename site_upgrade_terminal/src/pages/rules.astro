@@ -1,0 +1,63 @@
+---
+import Hero from "../components/chrome/Hero.astro";
+import PanelChrome from "../components/chrome/PanelChrome.astro";
+import BootLog from "../components/terminal/BootLog.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { rulesList, siteMeta } from "../data/site";
+---
+
+<BaseLayout
+  title="TheQuietBlock | Rules"
+  description="Readable server rules for TheQuietBlock, covering moderation, fair play, and shared-world care."
+  currentPage="rules"
+>
+  <Hero
+    slot="hero"
+    eyebrow="Rules"
+    title="Server rules"
+    subtitle="Simple expectations that protect the world, the chat, and everyone else's time."
+    command="cat rules.txt"
+  >
+    <a class="btn-primary" href="/join">Apply After Reading</a>
+    <a class="btn-secondary" href="/faq">FAQ</a>
+    <p class="server-inline">Server: <code>{siteMeta.host}</code></p>
+  </Hero>
+
+  <section class="dashboard-grid">
+    <BootLog
+      label="rules.log"
+      lines={[
+        "Loading server rules...",
+        "Grouping expectations by shared impact...",
+        "Publishing readable output..."
+      ]}
+    />
+
+    <section class="system-panel">
+      <PanelChrome label="moderation.txt" />
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Moderation Approach</p>
+          <h2>Clear and practical</h2>
+        </div>
+      </div>
+      <p>
+        Staff enforce these rules to protect trust, server performance, and player safety. The goal
+        is a calm long-term world, not a wall of legal text.
+      </p>
+    </section>
+  </section>
+
+  <section class="section-block">
+    <div class="stack-list">
+      {rulesList.map((rule) => (
+        <article class="system-panel protocol-card">
+          <PanelChrome label={`rule-${rule.id}.txt`} />
+          <p class="mini-label">Rule {rule.id}</p>
+          <h2>{rule.title}</h2>
+          <p>{rule.body}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

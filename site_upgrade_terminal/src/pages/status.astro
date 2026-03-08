@@ -1,0 +1,31 @@
+---
+import Hero from "../components/chrome/Hero.astro";
+import ServerStatusPanel from "../components/status/ServerStatusPanel.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteMeta } from "../data/site";
+---
+
+<BaseLayout
+  title="TheQuietBlock | Status"
+  description="Dedicated server status page for TheQuietBlock with live data, cooldown tracking, and explicit fallback behavior."
+  currentPage="status"
+>
+  <Hero
+    slot="hero"
+    eyebrow="Status"
+    title="Live server status"
+    subtitle="This page shows the current response from the live status integration and resets to unknown when the upstream check fails."
+    command={`check ${siteMeta.host}`}
+  >
+    <a class="btn-primary" href="/join">Join</a>
+    <a class="btn-secondary" href="/">Home</a>
+
+    <Fragment slot="console">
+      <p><span class="console-key">source</span> api.mcsrvstat.us</p>
+      <p><span class="console-key">host</span> {siteMeta.host}</p>
+      <p><span class="console-key">fallback</span> Unknown on failure</p>
+    </Fragment>
+  </Hero>
+
+  <ServerStatusPanel showDetails />
+</BaseLayout>

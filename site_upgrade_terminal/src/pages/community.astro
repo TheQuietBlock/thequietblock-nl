@@ -1,0 +1,110 @@
+---
+import Hero from "../components/chrome/Hero.astro";
+import PanelChrome from "../components/chrome/PanelChrome.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteMeta } from "../data/site";
+
+const highlights = [
+  {
+    title: "Whitelist-only access",
+    body: "Joining starts with a short application, which helps set expectations before someone enters the world."
+  },
+  {
+    title: "Shared-world respect",
+    body: "Players are expected to leave room for one another, clean up after large projects, and avoid builds that hurt performance."
+  },
+  {
+    title: "Human moderation",
+    body: "Questions, reports, and applications are handled by staff instead of an automated system."
+  }
+];
+
+const goodFit = [
+  "You want a smaller whitelist server instead of a large public hub.",
+  "You are happy to read the rules before you join.",
+  "You like long-term survival play more than quick reset cycles.",
+  "You are willing to share space and play respectfully with others."
+];
+
+const expectations = [
+  "The server favors stable play over constant spectacle.",
+  "Rules focus on fairness, performance, and shared trust.",
+  "The site keeps status and join information easy to find.",
+  "Community pages stay grounded until real highlight content is ready."
+];
+---
+
+<BaseLayout
+  title="TheQuietBlock | Community"
+  description="Community overview for TheQuietBlock, including what kind of environment the server aims to provide."
+  currentPage="community"
+>
+  <Hero
+    slot="hero"
+    eyebrow="Community"
+    title="What the server is like"
+    subtitle="A quick overview of the pace, moderation, and shared-world expectations behind TheQuietBlock."
+    command="cat community.txt"
+  >
+    <a class="btn-primary" href="/join">Request Access</a>
+    <a class="btn-secondary" href="/rules">Read Rules</a>
+    <p class="server-inline">Server: <code>{siteMeta.host}</code></p>
+
+    <Fragment slot="console">
+      <p><span class="console-key">review</span> Manual whitelist review</p>
+      <p><span class="console-key">style</span> Calm social survival</p>
+      <p><span class="console-key">status</span> Live route available</p>
+    </Fragment>
+  </Hero>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div>
+        <p class="section-kicker">Highlights</p>
+        <h2>Community at a glance</h2>
+      </div>
+    </div>
+    <div class="cards-grid cards-grid--three">
+      {highlights.map((highlight, index) => (
+        <article class="system-panel">
+          <PanelChrome label={`community-${index + 1}.txt`} />
+          <p class="mini-label">Highlight {index + 1}</p>
+          <h3>{highlight.title}</h3>
+          <p>{highlight.body}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mixed-grid">
+    <section class="system-panel">
+      <PanelChrome label="good-fit.txt" />
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Before You Join</p>
+          <h2>This server is a good fit if...</h2>
+        </div>
+      </div>
+      <ul class="check-list">
+        {goodFit.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="system-panel">
+      <PanelChrome label="expectations.txt" />
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Shared World</p>
+          <h2>What people can expect</h2>
+        </div>
+      </div>
+      <ul class="check-list">
+        {expectations.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </section>
+  </section>
+</BaseLayout>
